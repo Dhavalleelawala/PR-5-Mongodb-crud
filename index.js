@@ -32,6 +32,29 @@ app.get('/user/getAllUser',(req,res)=>{
     })
 })
 
+app.get('/user/delete/:id',(req,res)=>{
+    const {id} = req.params;
+    User.findByIdAndDelete(id)
+    .then((data)=>{
+        return res.json({message:"User Deleted.",data});
+    })
+    .catch((error)=>{
+        return res.json({message:error.message});
+    })
+})
+
+app.post('/user/update/:id',(req,res)=>{
+    const {id} = req.params;
+    User.findByIdAndUpdate(id,req.body)
+    .then((data)=>{
+        return res.json({message:"User Updated.",id:data.id});
+    })
+    .catch((error)=>{
+        return res.json({message:error.message});
+    })
+})
+
+
 app.listen(port,(err)=>{
     if(!err){
         console.log("Server start on port",port);
